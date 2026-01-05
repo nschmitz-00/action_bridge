@@ -17,10 +17,10 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(nav2_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(stretch_topological_navigation_msgs REQUIRED)
+find_package(clf_ue_audio_msgs REQUIRED)
+find_package(clf_audio_msgs)
 
 # find ROS 1 packages
 include(cmake/find_ros1_package.cmake)
@@ -28,38 +28,22 @@ include(cmake/find_ros1_package.cmake)
 find_package(PkgConfig REQUIRED)
 
 find_ros1_package(actionlib REQUIRED)
-find_ros1_package(move_base_msgs REQUIRED)
-find_ros1_package(ori_topological_navigation_msgs REQUIRED)
 find_ros1_package(roscpp REQUIRED)
+find_ros1_package(clf_ue_audio_one_msgs REQUIRED)
+find_ros1_package(audio_common_msgs)
 
 ament_export_include_directories(include)
 include_directories(include)
 
-add_executable(action_bridge_move_base_node
-    "src/action_bridge_move_base.cpp"
+add_executable(action_bridge_ue_audio_node
+    "src/action_bridge_ue_audio.cpp"
 )
-ament_target_dependencies(action_bridge_move_base_node
-    "ros1_roscpp" "ros1_actionlib" "ros1_move_base_msgs"
-    "rclcpp" "rclcpp_action" "nav2_msgs"
-)
-
-add_executable(action_bridge_door_pass_node
-    "src/action_bridge_door_pass.cpp"
-)
-ament_target_dependencies(action_bridge_door_pass_node
-    "ros1_roscpp" "ros1_actionlib" "ros1_move_base_msgs"
-    "rclcpp" "rclcpp_action" "nav2_msgs"
+ament_target_dependencies(action_bridge_ue_audio_node
+    "ros1_roscpp" "ros1_actionlib" "ros1_clf_ue_audio_one_msgs" "ros1_audio_common_msgs"
+    "rclcpp" "rclcpp_action" "clf_ue_audio_msgs" "clf_audio_msgs"
 )
 
-add_executable(action_bridge_topological_navigation_node
-    "src/action_bridge_topological_navigation.cpp"
-)
-ament_target_dependencies(action_bridge_topological_navigation_node
-    "ros1_roscpp" "ros1_actionlib" "ros1_ori_topological_navigation_msgs"
-    "rclcpp" "rclcpp_action" "stretch_topological_navigation_msgs"
-)
-
-install(TARGETS action_bridge_move_base_node action_bridge_door_pass_node action_bridge_topological_navigation_node
+install(TARGETS action_bridge_ue_audio_node
     DESTINATION lib/${PROJECT_NAME}
 )
 

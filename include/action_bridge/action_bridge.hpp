@@ -155,23 +155,14 @@ private:
       std::shared_future<ROS2ClientGoalHandle> gh2_future;
       auto send_goal_ops = ROS2SendGoalOptions();
       send_goal_ops.goal_response_callback =
-        [this, &gh2_future](std::shared_future<ROS2GoalHandle> gh2) mutable {
-          auto goal_handle = gh2_future.get();
-          if (!goal_handle) {
-            gh1_.setRejected();          // goal was not accepted by remote server
+        [this](ROS2GoalHandle gh2) mutable {
+          std::lock_guard<std::mutex> lock(mutex_);
+          if (!gh2) {
+            gh1_.setRejected();
             return;
           }
-
+          gh2_ = gh2;
           gh1_.setAccepted();
-
-          {
-            std::lock_guard<std::mutex> lock(mutex_);
-            gh2_ = goal_handle;
-
-            if (canceled_) {          // cancel was called in between
-              auto fut = client_->async_cancel_goal(gh2_);
-            }
-          }
         };
 
       send_goal_ops.feedback_callback = [this](ROS2GoalHandle, auto feedback2) mutable {
@@ -287,7 +278,7 @@ public:
   {
     (void)uuid;
     (void)goal;
-    if (!client_->waitForActionServerToStart(ros::Duration(1))) {
+    if (!client_->waitForActionServerToStart(ros::Duration(100000))) {
       RCLCPP_INFO(ros2_node_->get_logger(), "Action server not available after waiting");
       return rclcpp_action::GoalResponse::REJECT;
     }

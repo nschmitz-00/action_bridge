@@ -3,26 +3,22 @@
 <package format="3">
   <name>action_bridge</name>
   <version>0.1.0</version>
-  <description>Topological navigation action bridge</description>
+  <description>UE Audio action bridge</description>
 
-  <maintainer email="benoit@robots.ox.ac.uk">Benoit Casseau</maintainer>
+  <maintainer email="nschmitz@techfak.uni-bielefeld.de">Niklas Schmitz</maintainer>
 
   <license>Apache License 2.0</license>
 
-  <author email="benoit@robots.ox.ac.uk">Benoit Casseau</author>
-
+  <author email="nschmitz@techfak.uni-bielefeld.de">Niklas Schmitz</author>
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <!-- ROS 2 dependencies -->
-  <depend>nav2_msgs</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
-  <depend>stretch_topological_navigation_msgs</depend>
 
   <!-- ROS 1 dependencies -->
   <depend>actionlib</depend>
-  <depend>move_base_msgs</depend>
-  <depend>ori_topological_navigation_msgs</depend>
+  <depend>audio_common_msgs</depend>
   <depend>roscpp</depend>
 
   <test_depend>ament_lint_auto</test_depend>
