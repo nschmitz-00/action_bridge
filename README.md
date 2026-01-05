@@ -1,10 +1,8 @@
 A package to bridge actions between ROS1 and ROS2. 
 
-Please clone `jazzy-devel` branch in case you are working with ROS Jazzy.
-
 **NOTE:**   
 - Currently supports forwarding goals from ROS1 (one) action client to ROS2 (jazzy) action server  
-- As an example, implemented interfaces for the action bridge for AudioAction
+- As an example, implemented interfaces for the action bridge for AudioAction and FibonacciAction
 
 **Prerequisites:**  
 
@@ -42,7 +40,7 @@ ros2 run action_bridge action_bridge_fibonacci_node
 ```
 OR
 ```
-ros2 run action_bridge action_bridge_ue_audio_node
+ros2 run action_bridge action_bridge_ue_audio_node <ROS1 action name> <ROS2 action name>
 ```
 
 
